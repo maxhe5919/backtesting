@@ -1,4 +1,4 @@
-# Stock Trade Backtesting Platform (Design Demo)
+# Stock Trade Backtesting Platform (Demo Design)
 
 A web-based platform for backtesting stock trading strategies using historical and real-time market data. Built with Django, Django REST Framework, and Tailwind CSS.
 
