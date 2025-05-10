@@ -1,0 +1,75 @@
+body {
+    background-color: #f0f4f8;
+    font-family: 'Inter', sans-serif;
+}
+.card {
+    transition: all 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.tab-active {
+    border-bottom: 3px solid #3b82f6;
+    color: #1e40af;
+    font-weight: 600;
+}
+.metric-card {
+    transition: all 0.2s ease;
+}
+.metric-card:hover {
+    background-color: #dbeafe;
+}
+.file-input-label {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    transition: all 0.3s ease;
+}
+.file-input-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+.collapsible-section {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.collapsible-section.open {
+    max-height: 1000px;
+}
+.data-source-btn {
+    transition: all 0.2s ease;
+}
+.data-source-btn.active {
+    background-color: #3b82f6;
+    color: white;
+}
+.data-source-btn:hover:not(.active) {
+    background-color: #dbeafe;
+}
+.pulse {
+    position: relative;
+}
+.pulse::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: #10b981;
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}

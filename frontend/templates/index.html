@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <header class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stock Trade Backtesting Platform</h1>
+        <p class="text-gray-600">Test your trading strategies against historical market data</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left Panel: Data Input -->
+        <div class="lg:col-span-1">
+            {% include 'partials/data_input.html' %}
+        </div>
+
+        <!-- Right Panel: Results -->
+        <div class="lg:col-span-2">
+            {% include 'partials/performance_chart.html' %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                {% include 'partials/key_metrics.html' %}
+                {% include 'partials/trade_statistics.html' %}
+            </div>
+            {% include 'partials/trade_history.html' %}
+        </div>
+    </div>
+{% endblock %}

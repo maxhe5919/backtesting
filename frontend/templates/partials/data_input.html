@@ -1,0 +1,216 @@
+<div class="bg-white rounded-xl shadow-md p-6 mb-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Data Input</h2>
+
+    <!-- Data Source Selection -->
+    <div class="mb-6">
+        <h3 class="text-md font-medium text-gray-700 mb-3">Data Source</h3>
+
+        <div class="flex space-x-2 mb-4">
+            <button id="historical-btn" class="data-source-btn active flex-1 py-2 px-3 rounded-lg border border-gray-300 text-sm font-medium">
+                Historical
+            </button>
+            <button id="realtime-btn" class="data-source-btn flex-1 py-2 px-3 rounded-lg border border-gray-300 text-sm font-medium">
+                Realtime
+            </button>
+        </div>
+
+        <!-- Historical Data Options -->
+        <div id="historical-options">
+            <div class="mb-4">
+                <label class="file-input-label flex items-center justify-center w-full px-4 py-3 rounded-lg text-white cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Upload Dataset
+                    <input type="file" id="dataset-upload" accept=".csv,.json,.xlsx" class="hidden" />
+                </label>
+            </div>
+
+            <div class="text-sm text-gray-600 mb-4">Or use sample dataset:</div>
+
+            <select id="sample-dataset" class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="sp500">S&P 500 (2018-2023)</option>
+                <option value="nasdaq">NASDAQ (2018-2023)</option>
+                <option value="dow">Dow Jones (2018-2023)</option>
+                <option value="aapl">Apple Inc. (2018-2023)</option>
+                <option value="msft">Microsoft (2018-2023)</option>
+            </select>
+        </div>
+
+        <!-- Realtime Data Options -->
+        <div id="realtime-options" class="hidden">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Symbol</label>
+                <div class="flex space-x-2">
+                    <input type="text" id="realtime-symbol" placeholder="e.g. AAPL, MSFT" class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="add-symbol" class="bg-blue-600 hover:bg-blue-700 text-white px-3 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Selected Symbols</label>
+                <div id="selected-symbols" class="flex flex-wrap gap-2 min-h-[40px] p-2 border border-gray-300 rounded-lg">
+                    <!-- Symbols will be added dynamically -->
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Data Interval</label>
+                <select id="data-interval" class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="1m">1 Minute</option>
+                    <option value="5m">5 Minutes</option>
+                    <option value="15m">15 Minutes</option>
+                    <option value="30m">30 Minutes</option>
+                    <option value="1h">1 Hour</option>
+                    <option value="1d">Daily</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <div class="flex items-center justify-between">
+                    <label class="block text-sm font-medium text-gray-700">Data Feed Status</label>
+                    <span id="connection-status" class="pulse pl-4 text-sm text-green-600">Connected</span>
+                </div>
+                <div class="mt-2 text-xs text-gray-500">Last update: <span id="last-update">Just now</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Upload -->
+    <div class="mb-6">
+        <h3 class="text-md font-medium text-gray-700 mb-3">Trading Model</h3>
+
+        <div class="mb-4">
+            <label class="file-input-label flex items-center justify-center w-full px-4 py-3 rounded-lg text-white cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Upload Model
+                <input type="file" id="model-upload" accept=".joblib,.h5,.keras,.pkl" class="hidden" />
+            </label>
+            <div class="text-xs text-gray-500 mt-2">Supports joblib, keras, and pickle models</div>
+        </div>
+
+        <div class="text-sm text-gray-600 mb-4">Or use sample model:</div>
+
+        <select id="sample-model" class="w-full p-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="sma">Simple Moving Average Crossover</option>
+            <option value="macd">MACD Strategy</option>
+            <option value="rsi">RSI Oscillator</option>
+            <option value="ml">Basic ML Classifier</option>
+        </select>
+    </div>
+
+    <!-- Run Test Button -->
+    <button id="run-test" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition duration-300 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Run Backtest
+    </button>
+</div>
+
+<!-- Parameters Card -->
+<div class="bg-white rounded-xl shadow-md p-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Strategy Parameters</h2>
+
+    <!-- Basic Parameters -->
+    <div class="space-y-4 mb-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Initial Capital ($)</label>
+            <input type="number" id="initial-capital" value="10000" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Position Size (%)</label>
+            <input type="number" id="position-size" value="10" min="1" max="100" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Stop Loss (%)</label>
+            <input type="number" id="stop-loss" value="5" min="0" max="100" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Take Profit (%)</label>
+            <input type="number" id="take-profit" value="15" min="0" max="100" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+    </div>
+
+    <!-- Advanced Parameters Toggle -->
+    <div class="mb-4">
+        <button id="advanced-toggle" class="flex items-center justify-between w-full py-2 text-sm font-medium text-blue-600 hover:text-blue-800 focus:outline-none">
+            <span>Advanced Parameters</span>
+            <svg id="advanced-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Advanced Parameters Content -->
+    <div id="advanced-section" class="collapsible-section space-y-4 border-t border-gray-200 pt-4">
+        <!-- Trading Thresholds -->
+        <div>
+            <h3 class="text-sm font-medium text-gray-700 mb-3">Trading Thresholds</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Buy Signal</label>
+                    <input type="number" id="buy-threshold" value="0.7" min="0" max="1" step="0.01" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Sell Signal</label>
+                    <input type="number" id="sell-threshold" value="0.3" min="0" max="1" step="0.01" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Short Signal</label>
+                    <input type="number" id="short-threshold" value="0.2" min="0" max="1" step="0.01" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Cover Signal</label>
+                    <input type="number" id="cover-threshold" value="0.8" min="0" max="1" step="0.01" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Factors -->
+        <div>
+            <h3 class="text-sm font-medium text-gray-700 mb-3">Market Factors</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Volatility Factor</label>
+                    <input type="number" id="volatility-factor" value="1.0" min="0" max="5" step="0.1" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div class="text-xs text-gray-500 mt-1">Higher values increase sensitivity to market volatility</div>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Slippage (%)</label>
+                    <input type="number" id="slippage" value="0.1" min="0" max="5" step="0.05" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Transaction Fee (%)</label>
+                    <input type="number" id="transaction-fee" value="0.25" min="0" max="5" step="0.05" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="space-y-2">
+            <div class="flex items-center">
+                <input type="checkbox" id="reinvest-profits" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                <label for="reinvest-profits" class="ml-2 block text-sm text-gray-700">Reinvest Profits</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="allow-shorting" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                <label for="allow-shorting" class="ml-2 block text-sm text-gray-700">Allow Short Selling</label>
+            </div>
+            <div class="flex items-center">
+                <input type="checkbox" id="use-margin" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                <label for="use-margin" class="ml-2 block text-sm text-gray-700">Use Margin (2x)</label>
+            </div>
+        </div>
+    </div>
+</div>

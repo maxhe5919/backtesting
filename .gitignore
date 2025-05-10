@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+media/
+staticfiles/
+.DS_Store
+
+Thumbs.db
+.idea/
