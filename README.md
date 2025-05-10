@@ -32,7 +32,7 @@ A web-based platform for backtesting stock trading strategies using historical a
    ```bash
    echo "DJANGO_SECRET_KEY=$(python -c 'import secrets; print(secrets.token_urlsafe(50))')" > .env
    echo "DEBUG=True" >> .env
-   echo "DB_NAME=backtesting_db" >> .env
+   echo "DB_NAME=your_db_name" >> .env
    echo "DB_USER==your_user_name" >> .env
    echo "DB_PASSWORD=your_secure_password" >> .env
    echo "DB_HOST=db" >> .env
